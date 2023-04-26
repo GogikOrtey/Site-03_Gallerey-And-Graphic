@@ -1,0 +1,187 @@
+extends template
+
+mixin my-option
+  select
+    option(value='0') --- Нет ---
+    option(value='1') Название
+    option(value='2') Год выхода
+    option(value='3') Рейтинг в кинопоиске
+    option(value='4') Жанр
+    option(value='5') Количество сезонов
+
+block title
+  title Список мультсериалов 
+
+mixin table-create(a, b, c, d, e)
+  tr
+    td=a
+    td=b
+    td=c
+    td=d
+    td=e
+
+block footer 
+  +footer-long-page 
+  //script(src="http://d3js.org/d3.v7.js")
+  script(src="https://d3js.org/d3.v5.min.js")
+  script(src='js/js-3.js')
+  script(src='js/js-3-diagramm.js')
+  
+
+block content
+    details(open)
+      summary.text-002 Блок настроек показа
+      .main-block
+        .block-01
+          .table 
+            .title-1-1
+              p График:
+            .left-edge-1
+              p.title-1 Значение по оси OХ: 
+              div
+                input(type='radio', name='ox', value='жанр')
+                p Жанр
+              div
+                input(type='radio', name='ox', value='жанр')
+                p Год выхода                
+            .right-edge-1
+              p.title-1 Результат: 
+              div
+                input#in-1(type='checkbox', name='result', value='колво')       
+                p Количество частей           
+                span#or.tooltip 
+              div   
+                input#in-2(type='checkbox', name='result', value='макс')    
+                p Максимальный рейтинг             
+                span#gr.tooltip 
+              div
+                input#in-3(type='checkbox', name='result', value='мин')
+                p Минимальный рейтинг        
+                span#bl.tooltip     
+            button#butt-graf Построить 
+        .block-02
+          .table.class_01 
+            .title-1-1
+              p Фильтр:
+            .left-edge-1
+              p Название:
+              p Жанр:
+              p Количество сезонов:
+              p Год (от):	
+              p Год (до):	
+              p Рейтинг (от):	
+              p Рейтинг (до):
+            .right-edge-1
+              p
+                input#name(type='text', placeholder='Введите название')
+              p
+                input#name(type='text', placeholder='Введите жанр')
+              p
+                input#name(type='text', placeholder='Введите кол-во сезонов')
+              p
+                input#name(type='text', placeholder='Введите год')
+              p
+                input#name(type='text', placeholder='Введите год')
+              p
+                input#name(type='text', placeholder='Введите рейтинг')
+              p
+                input#name(type='text', placeholder='Введите рейтинг')
+            button#butt-filter Найти 
+        .block-03
+          .table-2
+            .title-1-2
+              p Сортировка:
+            .left-edge-2
+              p Первый уровень
+              p Второй уровень 
+              p Третий уровень
+            .center-edge-2#sort-opt 
+              p.l1
+                +my-option
+              p.l2
+                +my-option
+              p.l3
+                +my-option
+            .right-edge-2
+              p.no-ind по убыванию?
+                input(type='checkbox', name='ack1', value='ack1')
+              p.no-ind по убыванию?
+                input(type='checkbox', name='ack1', value='ack1')
+              p.no-ind по убыванию?
+                input(type='checkbox', name='ack1', value='ack1')
+            button#butt-sort Построить 
+      div.block-graf
+        p График:
+        div.curr-graff
+          //svg
+
+      
+    p.text-001 Таблица
+
+    //.f50px-spase
+      p
+
+    #bad-news 
+      p Записей по данному запросу не найдено :(
+
+    #table-container
+      table#my-table
+        tr.title
+          td Название
+          td Год выхода
+          td Рейтинг на кинопоиске
+          td Жанр
+          td Количество частей
+
+        +table-create('Слагтерра', '2004', '8', 'Мультсериал', '2')
+        +table-create('Кипо и эра чудесных зверей', '2016', '6', 'Мультсериал', '2')
+        +table-create('Звездный путь: Нижние палубы', '2017', '7', 'Мультсериал', '2')
+        +table-create('Ши-ра и непобедимые принцессы', '2015', '8', 'Мультсериал', '5')
+        +table-create('Любовь смерть и роботы', '2019', '9', 'Мультсериал', '2')
+        +table-create('В поисках легенд и мифов', '2020', '5', 'Мультсериал', '1')
+        +table-create('Маленький принц', '2020', '9', 'Мультфильм', '1')
+        +table-create('Удaчa (2022)', '2022', '7', 'Мультфильм', '1')
+        +table-create('Совиный дом', '2019', '7', 'Мультсериал', '3')
+        +table-create('Плохие парни 2022', '2021', '6', 'Мультфильм', '1')
+        +table-create('Мopской Мoнстр (2022)', '2022', '6', 'Мультфильм', '1')
+        +table-create('Легенда вокс машины', '2021', '8', 'Мультсериал', '2')
+        +table-create('Соник ', '2021', '8', 'Мультфильм', '2')
+        +table-create('Неуязвимый', '2018', '7',  'Мультсериал', '1')
+        +table-create('Кто в сапогах', '2016', '9', 'Мультфильм', '2')
+        +table-create('Бездомный бог', '2016', '4', 'Аниме', '2')
+        +table-create('Сад изящных слов', '2015', '6', 'Аниме', '1')
+        +table-create('Патема наоборот', '2011', '7', 'Аниме', '1')
+        +table-create('Песнь ночных сов', '2017', '6', 'Аниме', '2')
+        +table-create('Твоё имя', '2014', '9', 'Аниме', '1')
+        +table-create('Милый во Франксе', '2015', '10', 'Аниме', '1')
+        +table-create('Обещанный неверленд', '2016', '10', 'Аниме', '2')
+        +table-create('Восхождение героя щита', '2013', '9', 'Аниме', '2')
+        +table-create('Киберпанк: Бегущие по краю', '2022', '6', 'Аниме', '1')
+        +table-create('Коносуба', '2018', '8', 'Аниме', '2')
+        +table-create('Summer Nights', '2020', '6', 'Короткометражка', '1')
+        +table-create('Stuck In the Sound - Lets Go', '2021', '8', 'Короткометражка', '1')
+        +table-create('孔明の罠 - Kaizo Trap', '2019', '10', 'Короткометражка', '1')
+        +table-create('Ангри бёрдс', '2019', '6', 'Мультфильм', '2')
+        +table-create('Астерикс', '2017', '5', 'Мультфильм', '3')
+        +table-create('Балерина', '2016', '8', 'Мультфильм', '1')
+        +table-create('Билби', '2017', '7', 'Короткометражка', '1')
+        +table-create('Гнездо дракона', '2016', '9', 'Аниме', '2')
+        +table-create('Головоломка', '2015', '5', 'Мультфильм', '1')
+        +table-create('Зверопой', '2019', '6', 'Мультфильм', '2')
+        +table-create('Зверополис', '2017', '10', 'Мультфильм', '1')
+        +table-create('Лоракс', '2014', '4', 'Мультфильм', '1')
+        +table-create('Кунг-фу панда', '2013', '9', 'Мультфильм', '3')
+        +table-create('Облачно, ожидаются осадки', '2016', '4', 'Мультфильм', '2')
+        +table-create('Ральф', '2015', '5', 'Мультфильм', '2')
+        +table-create('Ранго', '2014', '7', 'Мультфильм', '4')
+        +table-create('Рататуй', '2012', '6', 'Мультфильм', '4')
+        +table-create('Семейка крудс', '2016', '8', 'Мультфильм', '2')
+        +table-create('Суперсемейка ', '2012', '8', 'Мультфильм', '2')
+        +table-create('Хранители снов', '2014', '7', 'Мультфильм', '1')
+        +table-create('Шрек', '2009', '10', 'Мультфильм', '4')
+        +table-create('Disenchantment (Разочарование)', '2018', '4', 'Мультсериал', '3')
+        +table-create('Бесконечный поезд', '2017', '5', 'Мультсериал', '3')
+        +table-create('Герои Энвелла', '2019', '8', 'Мультсериал', '2')
+        +table-create('Гравити Фолз', '2018', '7', 'Мультсериал', '2')
+        +table-create('Кармен СанДиего', '2017', '8', 'Мультсериал', '4')
+        +table-create('Космический рубеж', '2020', '8', 'Мультсериал', '3')

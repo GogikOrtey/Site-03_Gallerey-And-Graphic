@@ -1,0 +1,558 @@
+
+<!-- ----->
+<html> 
+  <head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="css/bootstrap-reboot.min.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
+    <link rel="stylesheet" href="/fonts/Blogger Sans.otf"/>
+    <!--link(rel='stylesheet', href='/fonts/Blogger Sans-Light Italic.otf')-->
+    <title>Список мультсериалов </title>
+  </head>
+  <body> 
+    <div class="h0"><a href="index.html">Title page</a></div>
+    <div class="h1"><a href="Page_03.html">Галерея мультсериалов</a></div>
+    <div class="h2"> <a href="Page_02.html">Список мультсериалов</a></div>
+    <div class="block-01">
+      <div class="hl"></div>
+    </div>
+    <details open="open">
+      <summary class="text-002">Блок настроек показа</summary>
+      <div class="main-block">
+        <div class="block-01">
+          <div class="table"> 
+            <div class="title-1-1">
+              <p>График:</p>
+            </div>
+            <div class="left-edge-1">
+              <p class="title-1">Значение по оси OХ: </p>
+              <div>
+                <input type="radio" name="ox" value="жанр"/>
+                <p>Жанр</p>
+              </div>
+              <div>
+                <input type="radio" name="ox" value="жанр"/>
+                <p>Год выхода                </p>
+              </div>
+            </div>
+            <div class="right-edge-1">
+              <p class="title-1">Результат: </p>
+              <div>
+                <input id="in-1" type="checkbox" name="result" value="колво"/>
+                <p>Количество частей           </p><span class="tooltip" id="or"> </span>
+              </div>
+              <div>  
+                <input id="in-2" type="checkbox" name="result" value="макс"/>
+                <p>Максимальный рейтинг             </p><span class="tooltip" id="gr"> </span>
+              </div>
+              <div>
+                <input id="in-3" type="checkbox" name="result" value="мин"/>
+                <p>Минимальный рейтинг        </p><span class="tooltip" id="bl">    </span>
+              </div>
+            </div>
+            <button id="butt-graf">Построить </button>
+          </div>
+        </div>
+        <div class="block-02">
+          <div class="table class_01"> 
+            <div class="title-1-1">
+              <p>Фильтр:</p>
+            </div>
+            <div class="left-edge-1">
+              <p>Название:</p>
+              <p>Жанр:</p>
+              <p>Количество сезонов:</p>
+              <p>Год (от):	</p>
+              <p>Год (до):	</p>
+              <p>Рейтинг (от):	</p>
+              <p>Рейтинг (до):</p>
+            </div>
+            <div class="right-edge-1">
+              <p>
+                <input id="name" type="text" placeholder="Введите название"/>
+              </p>
+              <p>
+                <input id="name" type="text" placeholder="Введите жанр"/>
+              </p>
+              <p>
+                <input id="name" type="text" placeholder="Введите кол-во сезонов"/>
+              </p>
+              <p>
+                <input id="name" type="text" placeholder="Введите год"/>
+              </p>
+              <p>
+                <input id="name" type="text" placeholder="Введите год"/>
+              </p>
+              <p>
+                <input id="name" type="text" placeholder="Введите рейтинг"/>
+              </p>
+              <p>
+                <input id="name" type="text" placeholder="Введите рейтинг"/>
+              </p>
+            </div>
+            <button id="butt-filter">Найти </button>
+          </div>
+        </div>
+        <div class="block-03">
+          <div class="table-2">
+            <div class="title-1-2">
+              <p>Сортировка:</p>
+            </div>
+            <div class="left-edge-2">
+              <p>Первый уровень</p>
+              <p>Второй уровень </p>
+              <p>Третий уровень</p>
+            </div>
+            <div class="center-edge-2" id="sort-opt"> 
+              <p class="l1">
+                <select>
+                  <option value="0">--- Нет ---</option>
+                  <option value="1">Название</option>
+                  <option value="2">Год выхода</option>
+                  <option value="3">Рейтинг в кинопоиске</option>
+                  <option value="4">Жанр</option>
+                  <option value="5">Количество сезонов</option>
+                </select>
+              </p>
+              <p class="l2">
+                <select>
+                  <option value="0">--- Нет ---</option>
+                  <option value="1">Название</option>
+                  <option value="2">Год выхода</option>
+                  <option value="3">Рейтинг в кинопоиске</option>
+                  <option value="4">Жанр</option>
+                  <option value="5">Количество сезонов</option>
+                </select>
+              </p>
+              <p class="l3">
+                <select>
+                  <option value="0">--- Нет ---</option>
+                  <option value="1">Название</option>
+                  <option value="2">Год выхода</option>
+                  <option value="3">Рейтинг в кинопоиске</option>
+                  <option value="4">Жанр</option>
+                  <option value="5">Количество сезонов</option>
+                </select>
+              </p>
+            </div>
+            <div class="right-edge-2">
+              <p class="no-ind">по убыванию?
+                <input type="checkbox" name="ack1" value="ack1"/>
+              </p>
+              <p class="no-ind">по убыванию?
+                <input type="checkbox" name="ack1" value="ack1"/>
+              </p>
+              <p class="no-ind">по убыванию?
+                <input type="checkbox" name="ack1" value="ack1"/>
+              </p>
+            </div>
+            <button id="butt-sort">Построить </button>
+          </div>
+        </div>
+      </div>
+      <div class="block-graf">
+        <p>График:</p>
+        <div class="curr-graff">
+          <!--svg-->
+        </div>
+      </div>
+    </details>
+    <p class="text-001">Таблица</p>
+    <!--.f50px-spase
+    p
+    
+    -->
+    <div id="bad-news"> 
+      <p>Записей по данному запросу не найдено :(</p>
+    </div>
+    <div id="table-container">
+      <table id="my-table">
+        <tr class="title">
+          <td>Название</td>
+          <td>Год выхода</td>
+          <td>Рейтинг на кинопоиске</td>
+          <td>Жанр</td>
+          <td>Количество частей</td>
+        </tr>
+        <tr>
+          <td>Слагтерра</td>
+          <td>2004</td>
+          <td>8</td>
+          <td>Мультсериал</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Кипо и эра чудесных зверей</td>
+          <td>2016</td>
+          <td>6</td>
+          <td>Мультсериал</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Звездный путь: Нижние палубы</td>
+          <td>2017</td>
+          <td>7</td>
+          <td>Мультсериал</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Ши-ра и непобедимые принцессы</td>
+          <td>2015</td>
+          <td>8</td>
+          <td>Мультсериал</td>
+          <td>5</td>
+        </tr>
+        <tr>
+          <td>Любовь смерть и роботы</td>
+          <td>2019</td>
+          <td>9</td>
+          <td>Мультсериал</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>В поисках легенд и мифов</td>
+          <td>2020</td>
+          <td>5</td>
+          <td>Мультсериал</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Маленький принц</td>
+          <td>2020</td>
+          <td>9</td>
+          <td>Мультфильм</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Удaчa (2022)</td>
+          <td>2022</td>
+          <td>7</td>
+          <td>Мультфильм</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Совиный дом</td>
+          <td>2019</td>
+          <td>7</td>
+          <td>Мультсериал</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>Плохие парни 2022</td>
+          <td>2021</td>
+          <td>6</td>
+          <td>Мультфильм</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Мopской Мoнстр (2022)</td>
+          <td>2022</td>
+          <td>6</td>
+          <td>Мультфильм</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Легенда вокс машины</td>
+          <td>2021</td>
+          <td>8</td>
+          <td>Мультсериал</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Соник </td>
+          <td>2021</td>
+          <td>8</td>
+          <td>Мультфильм</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Неуязвимый</td>
+          <td>2018</td>
+          <td>7</td>
+          <td>Мультсериал</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Кто в сапогах</td>
+          <td>2016</td>
+          <td>9</td>
+          <td>Мультфильм</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Бездомный бог</td>
+          <td>2016</td>
+          <td>4</td>
+          <td>Аниме</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Сад изящных слов</td>
+          <td>2015</td>
+          <td>6</td>
+          <td>Аниме</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Патема наоборот</td>
+          <td>2011</td>
+          <td>7</td>
+          <td>Аниме</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Песнь ночных сов</td>
+          <td>2017</td>
+          <td>6</td>
+          <td>Аниме</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Твоё имя</td>
+          <td>2014</td>
+          <td>9</td>
+          <td>Аниме</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Милый во Франксе</td>
+          <td>2015</td>
+          <td>10</td>
+          <td>Аниме</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Обещанный неверленд</td>
+          <td>2016</td>
+          <td>10</td>
+          <td>Аниме</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Восхождение героя щита</td>
+          <td>2013</td>
+          <td>9</td>
+          <td>Аниме</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Киберпанк: Бегущие по краю</td>
+          <td>2022</td>
+          <td>6</td>
+          <td>Аниме</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Коносуба</td>
+          <td>2018</td>
+          <td>8</td>
+          <td>Аниме</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Summer Nights</td>
+          <td>2020</td>
+          <td>6</td>
+          <td>Короткометражка</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Stuck In the Sound - Lets Go</td>
+          <td>2021</td>
+          <td>8</td>
+          <td>Короткометражка</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>孔明の罠 - Kaizo Trap</td>
+          <td>2019</td>
+          <td>10</td>
+          <td>Короткометражка</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Ангри бёрдс</td>
+          <td>2019</td>
+          <td>6</td>
+          <td>Мультфильм</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Астерикс</td>
+          <td>2017</td>
+          <td>5</td>
+          <td>Мультфильм</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>Балерина</td>
+          <td>2016</td>
+          <td>8</td>
+          <td>Мультфильм</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Билби</td>
+          <td>2017</td>
+          <td>7</td>
+          <td>Короткометражка</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Гнездо дракона</td>
+          <td>2016</td>
+          <td>9</td>
+          <td>Аниме</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Головоломка</td>
+          <td>2015</td>
+          <td>5</td>
+          <td>Мультфильм</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Зверопой</td>
+          <td>2019</td>
+          <td>6</td>
+          <td>Мультфильм</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Зверополис</td>
+          <td>2017</td>
+          <td>10</td>
+          <td>Мультфильм</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Лоракс</td>
+          <td>2014</td>
+          <td>4</td>
+          <td>Мультфильм</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Кунг-фу панда</td>
+          <td>2013</td>
+          <td>9</td>
+          <td>Мультфильм</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>Облачно, ожидаются осадки</td>
+          <td>2016</td>
+          <td>4</td>
+          <td>Мультфильм</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Ральф</td>
+          <td>2015</td>
+          <td>5</td>
+          <td>Мультфильм</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Ранго</td>
+          <td>2014</td>
+          <td>7</td>
+          <td>Мультфильм</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>Рататуй</td>
+          <td>2012</td>
+          <td>6</td>
+          <td>Мультфильм</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>Семейка крудс</td>
+          <td>2016</td>
+          <td>8</td>
+          <td>Мультфильм</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Суперсемейка </td>
+          <td>2012</td>
+          <td>8</td>
+          <td>Мультфильм</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Хранители снов</td>
+          <td>2014</td>
+          <td>7</td>
+          <td>Мультфильм</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <td>Шрек</td>
+          <td>2009</td>
+          <td>10</td>
+          <td>Мультфильм</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>Disenchantment (Разочарование)</td>
+          <td>2018</td>
+          <td>4</td>
+          <td>Мультсериал</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>Бесконечный поезд</td>
+          <td>2017</td>
+          <td>5</td>
+          <td>Мультсериал</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>Герои Энвелла</td>
+          <td>2019</td>
+          <td>8</td>
+          <td>Мультсериал</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Гравити Фолз</td>
+          <td>2018</td>
+          <td>7</td>
+          <td>Мультсериал</td>
+          <td>2</td>
+        </tr>
+        <tr>
+          <td>Кармен СанДиего</td>
+          <td>2017</td>
+          <td>8</td>
+          <td>Мультсериал</td>
+          <td>4</td>
+        </tr>
+        <tr>
+          <td>Космический рубеж</td>
+          <td>2020</td>
+          <td>8</td>
+          <td>Мультсериал</td>
+          <td>3</td>
+        </tr>
+      </table>
+    </div>
+    <div class="my-block-1"></div>
+  </body>
+  <div class="50px-spase">
+    <p></p>
+  </div>
+  <div class="page-footer">
+    <div class="fixed-bottom"> 
+      <p>made by <a href="https://vk.com/gog.ortey">Gogik Ortey</a></p>
+    </div>
+  </div>
+  <!--script(src="http://d3js.org/d3.v7.js")-->
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+  <script src="js/js-3.js"></script>
+  <script src="js/js-3-diagramm.js"></script>
+</html>

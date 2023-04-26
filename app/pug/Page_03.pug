@@ -1,0 +1,28 @@
+extends template
+
+mixin c(end)
+  - var count = 1;  
+  while count <= end
+    //p= "Hello, my number is" + count
+    - var s = 'img/' + count + '.jpg';
+    img(src=s)
+    - count += 1;
+
+block title
+  title Галерея мультсериалов
+
+block content
+  .cl-center
+    .img-class
+      +c(21)
+
+  //.img-class
+    img(src='img/1.jpg')
+    img(src='img/2.jpg')
+    img(src='img/3.jpg')
+
+  div.zoop
+
+block footer 
+  +footer-short-page 
+  script(src='js/js-2.js')
