@@ -429,3 +429,11 @@ tr.title td {
   width: 500px;
   margin: auto;
 }
+.bar {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+}
+.bar-container {
+  margin-right: 4px;
+  margin-left: 4px;
+}

@@ -55,23 +55,23 @@ function CreateOutpMassForDate(Date, int_mode_y, int_mode_x) {
 
     for(let i = 0; i < Date.length; i++) {
         if(outMassForDate_x[Date[i][str_mode]] == null) {
-            console.log('Для данного года ' + Date[i][str_mode] + ' ещё нет ключа');
+            //console.log('Для данного года ' + Date[i][str_mode] + ' ещё нет ключа');
             outMassForDate_x[Date[i][str_mode]] = Date[i][str_mode_date];
         } else {
             if(int_mode_x == 0) {
                 if (outMassForDate_x[Date[i][str_mode]] < Date[i][str_mode_date]) {
                     outMassForDate_x[Date[i][str_mode]] = Date[i][str_mode_date];
-                    console.log('Обнаружено кол-во частей, больше записанного. outMassForDate_x[Date[i][str_mode]] = ' + outMassForDate_x[Date[i][str_mode]]);
+                    //console.log('Обнаружено кол-во частей, больше записанного. outMassForDate_x[Date[i][str_mode]] = ' + outMassForDate_x[Date[i][str_mode]]);
                 }
             }else if(int_mode_x == 1) {
                 if (outMassForDate_x[Date[i][str_mode]] < Date[i][str_mode_date]) {
                     outMassForDate_x[Date[i][str_mode]] = Date[i][str_mode_date];
-                    console.log('Обнаружен рейтинг, больше записанного. outMassForDate_x[Date[i][str_mode]] = ' + outMassForDate_x[Date[i][str_mode]]);
+                    //console.log('Обнаружен рейтинг, больше записанного. outMassForDate_x[Date[i][str_mode]] = ' + outMassForDate_x[Date[i][str_mode]]);
                 }
             } else if (int_mode_x == 2) {
                 if (outMassForDate_x[Date[i][str_mode]] > Date[i][str_mode_date]) {
                     outMassForDate_x[Date[i][str_mode]] = Date[i][str_mode_date];
-                    console.log('Обнаружен рейтинг, меньше записанного. outMassForDate_x[Date[i][str_mode]] = ' + outMassForDate_x[Date[i][str_mode]]);
+                    //console.log('Обнаружен рейтинг, меньше записанного. outMassForDate_x[Date[i][str_mode]] = ' + outMassForDate_x[Date[i][str_mode]]);
                 }
             }
         }
@@ -116,7 +116,7 @@ if(inp_x_Ax == 0) strLett = "Кол-во частей";
 else if(inp_x_Ax == 1) strLett = "Max рейтинг";
 else if(inp_x_Ax == 2) strLett = "Min рейтинг";
 
-DrawLinearGrafic_02(data_x, data_y, strLett, "Год выхода");
+//DrawLinearGrafic_02(data_x, data_y, strLett, "Год выхода");
 
 function GetMinMaxVal(mass) {
     for(let i = 0; i<mass.length; i++) {
@@ -216,4 +216,77 @@ function DrawLinearGrafic_02(data_x, data_y, strX, strY) {
             .y(function(d) { return yScale(d); })
             .curve(d3.curveCardinal.tension(0.1)) // Задаю степень кривизны линии
         );
+}
+
+let inMapEx_01 = {
+    "Мультсериал" : 5,
+    "Аниме" : 2,
+    "Короткометражка" : 1,
+    "Мультфильм" : 4
+};
+
+DrawGistDiagramm(inMapEx_01);
+
+function DrawGistDiagramm(map) {    
+    let width = 500;
+    let height = 300;
+    let marginX = 50;
+    let marginY = 40;
+
+    let svg = d3.select(".curr-graff")
+     .append("svg")
+     .attr("height", height)
+     .attr("width", width)
+     //.style("border", "solid thin grey");
+     
+    let min = 0;
+    let max = 6; // изменено на 6, чтобы большинство столбцов не было скрыто за верхней границей
+    let xAxisLen = width - 2 * marginX;
+    let yAxisLen = height - 2 * marginY;
+    let data = Object.entries(map);
+
+    // Функции шкалирования
+    let scaleX = d3.scaleBand()
+     .domain(data.map(function(d) {
+       return d[0];
+     }))
+     .range([0, xAxisLen])
+     .padding(0.45);
+     
+    let scaleY = d3.scaleLinear()
+     .domain([min, max])
+     .range([yAxisLen, 0]);
+     
+    // Создание осей
+    let axisX = d3.axisBottom(scaleX);  // Горизонтальная
+    let axisY = d3.axisLeft(scaleY)     // Вертикальная
+    //var yAxis = d3.axisLeft(yScale)
+        .tickValues(d3.range(Math.ceil(scaleY.domain()[0]), Math.floor(scaleY.domain()[1]) + 1, 1))
+        .tickFormat(d3.format(".0f"));
+
+    svg.append("g")
+     .attr("transform", `translate(${marginX}, ${height - marginY})`)
+     .call(axisX)
+     .attr("class", "x-axis");
+     
+    svg.append("g")
+     .attr("transform", `translate(${marginX}, ${marginY})`)
+     .call(axisY);
+
+    // Цвета столбиков
+    let color = d3.scaleOrdinal(d3.schemeCategory10);
+
+    // Создание и отрисовка столбиков гистограммы
+    let g = svg.append("g")
+    .attr("transform", `translate(${ marginX}, ${ marginY})`)
+    .selectAll(".rect")
+    .data(data)
+    .enter().append("rect")
+    .attr("x", function(d) { return scaleX(d[0]); })
+    .attr("width", scaleX.bandwidth())
+    .attr("y", function(d) { return scaleY(d[1]); })
+    .attr("height", function(d) { return yAxisLen - scaleY(d[1]); })
+    .attr("fill", function(d) { return color(d[0]); })
+    .attr("rx", 3)
+    .attr("ry", 3);  
 }
