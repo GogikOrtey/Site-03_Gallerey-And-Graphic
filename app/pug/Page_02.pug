@@ -39,23 +39,23 @@ block content
             .left-edge-1
               p.title-1 Значение по оси OХ: 
               div
-                input(type='radio', name='ox', value='жанр')
+                input#inp2-1(type='radio', name='ox', value='жанр')
                 p Жанр
               div
-                input(type='radio', name='ox', value='жанр')
+                input#inp2-2(type='radio', name='ox', value='жанр')
                 p Год выхода                
             .right-edge-1
               p.title-1 Результат: 
               div
-                input#in-1(type='checkbox', name='result', value='колво')       
+                input#in-1(type='radio', name='result', value='колво')       
                 p Макс. количество частей           
                 span#or.tooltip 
               div   
-                input#in-2(type='checkbox', name='result', value='макс')    
+                input#in-2(type='radio', name='result', value='макс')    
                 p Максимальный рейтинг             
                 span#gr.tooltip 
               div
-                input#in-3(type='checkbox', name='result', value='мин')
+                input#in-3(type='radio', name='result', value='мин')
                 p Минимальный рейтинг        
                 span#bl.tooltip     
             button#butt-graf Построить 
@@ -112,7 +112,8 @@ block content
             button#butt-sort Построить 
       div.block-graf
         p График:
-        div.curr-graff
+        div.graf-container
+          div.curr-graff
       
     p.text-001 Таблица
 

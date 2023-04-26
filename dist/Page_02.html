@@ -28,26 +28,26 @@
             <div class="left-edge-1">
               <p class="title-1">Значение по оси OХ: </p>
               <div>
-                <input type="radio" name="ox" value="жанр"/>
+                <input id="inp2-1" type="radio" name="ox" value="жанр"/>
                 <p>Жанр</p>
               </div>
               <div>
-                <input type="radio" name="ox" value="жанр"/>
+                <input id="inp2-2" type="radio" name="ox" value="жанр"/>
                 <p>Год выхода                </p>
               </div>
             </div>
             <div class="right-edge-1">
               <p class="title-1">Результат: </p>
               <div>
-                <input id="in-1" type="checkbox" name="result" value="колво"/>
+                <input id="in-1" type="radio" name="result" value="колво"/>
                 <p>Макс. количество частей           </p><span class="tooltip" id="or"> </span>
               </div>
               <div>  
-                <input id="in-2" type="checkbox" name="result" value="макс"/>
+                <input id="in-2" type="radio" name="result" value="макс"/>
                 <p>Максимальный рейтинг             </p><span class="tooltip" id="gr"> </span>
               </div>
               <div>
-                <input id="in-3" type="checkbox" name="result" value="мин"/>
+                <input id="in-3" type="radio" name="result" value="мин"/>
                 <p>Минимальный рейтинг        </p><span class="tooltip" id="bl">    </span>
               </div>
             </div>
@@ -153,7 +153,9 @@
       </div>
       <div class="block-graf">
         <p>График:</p>
-        <div class="curr-graff"></div>
+        <div class="graf-container">
+          <div class="curr-graff"></div>
+        </div>
       </div>
     </details>
     <p class="text-001">Таблица</p>

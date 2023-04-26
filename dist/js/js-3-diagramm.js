@@ -1,13 +1,3 @@
-let grafDiv = document.getElementsByClassName('block-graf');
-
-let isVisible = true; // Видимый ли элемент с диаграммой?
-
-if(isVisible == false) {
-    grafDiv[0].style.display = "none"; 
-} else {
-    grafDiv[0].style.display = "block";
-}
-
 function GetTable() {
     // Получаем ссылку на таблицу
     let table = document.getElementById("my-table");
@@ -81,61 +71,8 @@ function CreateOutpMassForDate(Date, int_mode_y, int_mode_x) {
     return outMassForDate_x;
 }
 
-let inp_x_Ax = 0;
-
-let newDate = CreateOutpMassForDate(data, 1, inp_x_Ax);
-
-let data_x = [2011, 2012, 2016, 2020, 2021, 2023];
-let data_y = [15, 10, 11, 16, 1, 20];
-
-data_x = Object.keys(newDate);
-data_y = Object.values(newDate);
-
-/*
-console.log('parseFloat(data_x[0]) = ' + parseFloat(data_x[0]));
-if(parseFloat(data_x[0]) === NaN) {
-    let y = data_x.length;
-    data_x = [];
-    for(let i = 0; i<y; i++) {
-        data_x.push(i);
-    }
-    console.log('data_x = ' + data_x);
-}
-
-let map_y = {
-    "Мультсериал" : 5,
-    "Аниме" : 2,
-    "Короткометражка" : 1,
-    "Мультфильм" : 4
-};
-*/
-
-let strLett;
-
-if(inp_x_Ax == 0) strLett = "Кол-во частей";
-else if(inp_x_Ax == 1) strLett = "Max рейтинг";
-else if(inp_x_Ax == 2) strLett = "Min рейтинг";
-
-//DrawLinearGrafic_02(data_x, data_y, strLett, "Год выхода");
-
-function GetMinMaxVal(mass) {
-    for(let i = 0; i<mass.length; i++) {
-        mass[i] = parseFloat(mass[i]);
-    }
-
-    let min = d3.min(mass); 
-    let max = d3.max(mass); 
-    let gerr = max-min;
-
-    let outMin = min - gerr*0.1;
-    let outMax = max + gerr*0.1;
-
-    let outMass = [outMin, outMax];
-    console.log('sizeMass = ' + outMass);
-    return outMass;
-}
-
-function DrawLinearGrafic_02(data_x, data_y, strX, strY) {
+// Рисует линейный график
+function DrawLinearGrafic_02(data_x, data_y, strX, strY, int_color) {
     // Проверяем, что входные данные являются числами
     if (!Array.isArray(data_x) || !Array.isArray(data_y) || data_x.length !== data_y.length) {
         console.error("Invalid input data");
@@ -204,10 +141,16 @@ function DrawLinearGrafic_02(data_x, data_y, strX, strY) {
         .attr("class", "y-legend")
         .style("fill", "gray"); // set color to gray
 
+    let currColor;
+
+    if(int_color == 0) currColor = "orange";
+    else if(int_color == 1) currColor = "lightgreen";
+    else if(int_color == 2) currColor = "#00a3ff";
+
     svg.append("path")
         .datum(data_y)
         .attr("fill", "none")
-        .attr("stroke", "orange")
+        .attr("stroke", currColor)
         .attr("stroke-width", 3)
         .attr("stroke-linecap", "round")
         .attr("stroke-dasharray", "0,0")
@@ -218,16 +161,8 @@ function DrawLinearGrafic_02(data_x, data_y, strX, strY) {
         );
 }
 
-let inMapEx_01 = {
-    "Мультсериал" : 5,
-    "Аниме" : 2,
-    "Короткометражка" : 1,
-    "Мультфильм" : 4
-};
-
-DrawGistDiagramm(inMapEx_01);
-
-function DrawGistDiagramm(map) {    
+// Рисует столбчатый график
+function DrawGistDiagramm(map, input_b) {    
     let width = 500;
     let height = 300;
     let marginX = 50;
@@ -240,7 +175,11 @@ function DrawGistDiagramm(map) {
      //.style("border", "solid thin grey");
      
     let min = 0;
-    let max = 6; // изменено на 6, чтобы большинство столбцов не было скрыто за верхней границей
+    let max; 
+
+    if(input_b == 0) max = 5;
+    else max = 10;
+
     let xAxisLen = width - 2 * marginX;
     let yAxisLen = height - 2 * marginY;
     let data = Object.entries(map);
@@ -289,4 +228,102 @@ function DrawGistDiagramm(map) {
     .attr("fill", function(d) { return color(d[0]); })
     .attr("rx", 3)
     .attr("ry", 3);  
+}
+
+// Возвращает минимальное и максимальное значение из массива, с небольшим смещением
+function GetMinMaxVal(mass) {
+    for(let i = 0; i<mass.length; i++) {
+        mass[i] = parseFloat(mass[i]);
+    }
+
+    let min = d3.min(mass); 
+    let max = d3.max(mass); 
+    let gerr = max-min;
+
+    let outMin = min - gerr*0.1;
+    let outMax = max + gerr*0.1;
+
+    let outMass = [outMin, outMax];
+    console.log('sizeMass = ' + outMass);
+    return outMass;
+}
+
+// Проверяет, какие круглые кнопки выбраны в данный момент
+function radioButtonCheck() {
+    // Получить все радио-кнопки
+    const radioButtons = document.querySelectorAll('.block-01 input[type="radio"]');
+    
+    let inpMassRad = [];
+
+    // Обойти все радио-кнопки и найти выбранные значения
+    for (let i = 0; i < radioButtons.length; i++) {
+        console.log(radioButtons[i].checked); 
+        inpMassRad.push(radioButtons[i].checked);
+    }
+
+    // ******* Вот тут можно улучшить код ********
+    if(inpMassRad[0] == true) input_a = 0; else input_a = 1;
+    if(inpMassRad[2] == true) input_b = 0; 
+    else if(inpMassRad[2] == true) input_b = 1;
+    else input_b = 2;
+
+    // Если ничего не выбрано, вернёт последние значения
+}
+
+// ----------- 
+// Начало программы
+
+let grafDiv = document.getElementsByClassName('block-graf');
+
+let isVisible = true; // Скрываю или показываю элемент с диаграммой
+grafDiv[0].style.display = isVisible ? "block" : "none";
+
+let input_a = 0; // Жанр / Год выхода
+let input_b = 0; // Макс. кол-во частей / Макс. рейтинг / Мин рейтинг
+
+// -------
+
+let buttDraw = document.getElementById('butt-graf');
+let graf_container = document.getElementsByClassName('graf-container');
+
+// Вот тут какие-то проблемы, но я не могу понять какие
+// А так всё работает
+buttDraw.addEventListener('click', () => {
+    console.log('Кнопка нажата!');
+
+    // Удаляю график
+    let mainGraf = document.getElementsByClassName('curr-graff');
+    mainGraf[0].remove();
+
+    // Создаю новый элемент
+    let mainGraf2 = document.createElement("div");
+    mainGraf2.className = "curr-graff";
+
+    // И вставляю его в нужное место
+    graf_container.insertBefore(mainGraf2, graf_container.firstChild);
+
+    radioButtonCheck(); // Собираю информацию о выбранных опциях
+    MainGenerateGrafic(input_a, input_b); // И отрисовываю график
+});
+
+function MainGenerateGrafic(input_a, input_b) {
+    let data_x = []; 
+    let data_y = []; 
+    
+    let newDate = CreateOutpMassForDate(data, input_a, input_b);
+    
+    data_x = Object.keys(newDate);
+    data_y = Object.values(newDate);
+    
+    let strLett;
+    
+    if(input_b == 0) strLett = "Кол-во частей";
+    else if(input_b == 1) strLett = "Max рейтинг";
+    else if(input_b == 2) strLett = "Min рейтинг";
+    
+    if(input_a == 1) { 
+        DrawLinearGrafic_02(data_x, data_y, strLett, "Год выхода", input_b);
+    } else { 
+        DrawGistDiagramm(newDate, input_b);
+    }
 }
