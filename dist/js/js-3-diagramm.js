@@ -1,3 +1,4 @@
+// Возвращает все значения строк из таблицы, в массиве
 function GetTable() {
     // Получаем ссылку на таблицу
     let table = document.getElementById("my-table");
@@ -28,6 +29,7 @@ function GetTable() {
     return data;
 }
 
+// Проходит по всем значениям входного массива, и мобирает массив значений для графика
 function CreateOutpMassForDate(Date, int_mode_y, int_mode_x) {
     // Date - Входной массив, с таблицей
     // int_mode_y и int_mode_x - число-ключ в массиве Date
@@ -35,17 +37,18 @@ function CreateOutpMassForDate(Date, int_mode_y, int_mode_x) {
     let str_mode;
     let str_mode_date;
 
+    // Устанавливаю строки-ключи для изъятия данных их массива-словаря
     if(int_mode_y == 0) str_mode = "Жанр";
     else if (int_mode_y == 1) str_mode = "Год выхода";
 
     if(int_mode_x == 0) str_mode_date = "Количество частей";
     else if (int_mode_x == 1 || int_mode_x == 2) str_mode_date = "Рейтинг на кинопоиске";
 
-    let outMassForDate_x = {};
+    let outMassForDate_x = {}; // Выходной массив 
 
     for(let i = 0; i < Date.length; i++) {
         if(outMassForDate_x[Date[i][str_mode]] == null) {
-            //console.log('Для данного года ' + Date[i][str_mode] + ' ещё нет ключа');
+            //console.log('Для данного значения ' + Date[i][str_mode] + ' ещё нет ключа');
             outMassForDate_x[Date[i][str_mode]] = Date[i][str_mode_date];
         } else {
             if(int_mode_x == 0) {
@@ -230,9 +233,11 @@ function DrawGistDiagramm(map, input_b) {
     .attr("ry", 3);  
 }
 
-// Возвращает минимальное и максимальное значение из массива, с небольшим смещением
+// Возвращает минимальное и максимальное значение из массива, с небольшим смещением,
+// для более красивого отображения графика
 function GetMinMaxVal(mass) {
     for(let i = 0; i<mass.length; i++) {
+        // Преобразовываю все данные массива в числа
         mass[i] = parseFloat(mass[i]);
     }
 
@@ -269,6 +274,7 @@ function radioButtonCheck() {
     // Если ничего не выбрано, вернёт последние значения
 }
 
+// Изменяет отображение блока с графиком, на странице
 function setVisibleElementGraf(isVisible) {
     grafDiv[0].style.display = isVisible ? "block" : "none";
 }
@@ -278,7 +284,8 @@ function setVisibleElementGraf(isVisible) {
 
 let grafDiv = document.getElementsByClassName('block-graf');
 
-let isVisible = false; // Скрываю или показываю элемент с диаграммой
+// Скрываю или показываю элемент с диаграммой
+let isVisible = false; 
 setVisibleElementGraf(isVisible);
 
 let input_a = 0; // Жанр / Год выхода
@@ -289,8 +296,7 @@ let input_b = 0; // Макс. кол-во частей / Макс. рейтин�
 let buttDraw = document.getElementById('butt-graf');
 let graf_container = document.getElementById('graf-container');
 
-// Вот тут какие-то проблемы, но я не могу понять какие
-// А так всё работает
+// Выполняется при нажатии на кнопку "Построить" в блоке графика
 buttDraw.addEventListener('click', () => {
     console.log('Кнопка нажата!');
     setVisibleElementGraf(true);
@@ -311,24 +317,32 @@ buttDraw.addEventListener('click', () => {
     MainGenerateGrafic(input_a, input_b); // И отрисовываю график
 });
 
+// Рисует нужный график, с нужными данными
 function MainGenerateGrafic(input_a, input_b) {
     let data_x = []; 
     let data_y = []; 
     
+    // Получаю новые данные из таблицы на странице
+    // Так что графики изменяются, после фильтрации значений
+    let data = GetTable(); 
+
+    // Получаю массив значений, для построения графика
     let newDate = CreateOutpMassForDate(data, input_a, input_b);
     
     data_x = Object.keys(newDate);
     data_y = Object.values(newDate);
     
-    let strLett;
+    let strLett; // Подпись для линейного графика
     
     if(input_b == 0) strLett = "Кол-во частей";
     else if(input_b == 1) strLett = "Max рейтинг";
     else if(input_b == 2) strLett = "Min рейтинг";
     
     if(input_a == 1) { 
+        // Если выбран "Год выхода", то рисую линейный график
         DrawLinearGrafic_02(data_x, data_y, strLett, "Год выхода", input_b);
     } else { 
+        // Если выбран "Жанр", то рисую столбчатый график
         DrawGistDiagramm(newDate, input_b);
     }
 }
