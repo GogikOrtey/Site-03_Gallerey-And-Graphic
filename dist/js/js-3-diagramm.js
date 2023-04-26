@@ -8,24 +8,134 @@ if(isVisible == false) {
     grafDiv[0].style.display = "block";
 }
 
-let data_x = [1, 2, 3, 4, 5, 6];
-let data_y = [15, 10, 11, 16, 1, 20];
+function GetTable() {
+    // Получаем ссылку на таблицу
+    let table = document.getElementById("my-table");
 
-DrawGrafic_02(data_x, data_y);
+    // Получаем список заголовков столбцов
+    const headers = [];
+    for (let i = 0; i < table.rows[0].cells.length; i++) {
+      headers[i] = table.rows[0].cells[i].textContent;
+    }
 
-function GetMinMaxVal(mass) {
-  let min = d3.min(mass);
-  let max = d3.max(mass);
-  let gerr = max-min;
+    //console.log(headers);
 
-  let outMin = min - gerr*0.1;
-  let outMax = max + gerr*0.1;
+    // Проходим по каждой строке таблицы и сохраняем ее содержимое в массив словарей
+    let data = [];
 
-  let outMass = [outMin, outMax];
-  return outMass;
+    for (let i = 1; i < table.rows.length; i++) {
+      const tableRow = table.rows[i];
+      const rowData = {};
+
+      // Проходим по каждой ячейке в строке и сохраняем ее содержимое в соответствующий заголовок столбца
+      for (let j = 0; j < tableRow.cells.length; j++) {
+        rowData[headers[j]] = tableRow.cells[j].textContent;
+      }
+
+      data.push(rowData);
+    }
+
+    return data;
 }
 
-function DrawGrafic_02(data_x, data_y) {
+function CreateOutpMassForDate(Date, int_mode_y, int_mode_x) {
+    // Date - Входной массив, с таблицей
+    // int_mode_y и int_mode_x - число-ключ в массиве Date
+
+    let str_mode;
+    let str_mode_date;
+
+    if(int_mode_y == 0) str_mode = "Жанр";
+    else if (int_mode_y == 1) str_mode = "Год выхода";
+
+    if(int_mode_x == 0) str_mode_date = "Количество частей";
+    else if (int_mode_x == 1 || int_mode_x == 2) str_mode_date = "Рейтинг на кинопоиске";
+
+    let outMassForDate_x = {};
+
+    for(let i = 0; i < Date.length; i++) {
+        if(outMassForDate_x[Date[i][str_mode]] == null) {
+            console.log('Для данного года ' + Date[i][str_mode] + ' ещё нет ключа');
+            outMassForDate_x[Date[i][str_mode]] = Date[i][str_mode_date];
+        } else {
+            if(int_mode_x == 0) {
+                if (outMassForDate_x[Date[i][str_mode]] < Date[i][str_mode_date]) {
+                    outMassForDate_x[Date[i][str_mode]] = Date[i][str_mode_date];
+                    console.log('Обнаружено кол-во частей, больше записанного. outMassForDate_x[Date[i][str_mode]] = ' + outMassForDate_x[Date[i][str_mode]]);
+                }
+            }else if(int_mode_x == 1) {
+                if (outMassForDate_x[Date[i][str_mode]] < Date[i][str_mode_date]) {
+                    outMassForDate_x[Date[i][str_mode]] = Date[i][str_mode_date];
+                    console.log('Обнаружен рейтинг, больше записанного. outMassForDate_x[Date[i][str_mode]] = ' + outMassForDate_x[Date[i][str_mode]]);
+                }
+            } else if (int_mode_x == 2) {
+                if (outMassForDate_x[Date[i][str_mode]] > Date[i][str_mode_date]) {
+                    outMassForDate_x[Date[i][str_mode]] = Date[i][str_mode_date];
+                    console.log('Обнаружен рейтинг, меньше записанного. outMassForDate_x[Date[i][str_mode]] = ' + outMassForDate_x[Date[i][str_mode]]);
+                }
+            }
+        }
+    } 
+
+    console.log(outMassForDate_x);
+    return outMassForDate_x;
+}
+
+let inp_x_Ax = 0;
+
+let newDate = CreateOutpMassForDate(data, 1, inp_x_Ax);
+
+let data_x = [2011, 2012, 2016, 2020, 2021, 2023];
+let data_y = [15, 10, 11, 16, 1, 20];
+
+data_x = Object.keys(newDate);
+data_y = Object.values(newDate);
+
+/*
+console.log('parseFloat(data_x[0]) = ' + parseFloat(data_x[0]));
+if(parseFloat(data_x[0]) === NaN) {
+    let y = data_x.length;
+    data_x = [];
+    for(let i = 0; i<y; i++) {
+        data_x.push(i);
+    }
+    console.log('data_x = ' + data_x);
+}
+
+let map_y = {
+    "Мультсериал" : 5,
+    "Аниме" : 2,
+    "Короткометражка" : 1,
+    "Мультфильм" : 4
+};
+*/
+
+let strLett;
+
+if(inp_x_Ax == 0) strLett = "Кол-во частей";
+else if(inp_x_Ax == 1) strLett = "Max рейтинг";
+else if(inp_x_Ax == 2) strLett = "Min рейтинг";
+
+DrawLinearGrafic_02(data_x, data_y, strLett, "Год выхода");
+
+function GetMinMaxVal(mass) {
+    for(let i = 0; i<mass.length; i++) {
+        mass[i] = parseFloat(mass[i]);
+    }
+
+    let min = d3.min(mass); 
+    let max = d3.max(mass); 
+    let gerr = max-min;
+
+    let outMin = min - gerr*0.1;
+    let outMax = max + gerr*0.1;
+
+    let outMass = [outMin, outMax];
+    console.log('sizeMass = ' + outMass);
+    return outMass;
+}
+
+function DrawLinearGrafic_02(data_x, data_y, strX, strY) {
     // Проверяем, что входные данные являются числами
     if (!Array.isArray(data_x) || !Array.isArray(data_y) || data_x.length !== data_y.length) {
         console.error("Invalid input data");
@@ -60,7 +170,14 @@ function DrawGrafic_02(data_x, data_y) {
 
     // Создаем оси x и y
     var xAxis = d3.axisBottom(xScale);
-    var yAxis = d3.axisLeft(yScale);
+    //var xAxis;
+    //xAxis.tickFormat(d3.format(".0f")).tickValues(data_x.map(d => Number(d).toLocaleString('en-US', {minimumIntegerDigits: 4, useGrouping:false})));  
+    xAxis.tickFormat(d3.format(".0f"))
+        .tickValues(data_x.filter((d, i) => i % 2 === 0).map(d => Number(d).toLocaleString('en-US', {minimumIntegerDigits: 4, useGrouping:false})));
+
+    var yAxis = d3.axisLeft(yScale)
+        .tickValues(d3.range(Math.ceil(yScale.domain()[0]), Math.floor(yScale.domain()[1]) + 1, 1))
+        .tickFormat(d3.format(".0f"));
 
     svg.append("g")
         .attr("transform", "translate(0," + 250 + ")")
@@ -76,14 +193,14 @@ function DrawGrafic_02(data_x, data_y) {
     svg.append("g")
         .attr("transform", "translate(225," + 290 + ")")
         .append("text")
-        .text("Жанр")
+        .text(strY)
         .attr("class", "x-legend")
         .style("fill", "gray"); // set color to gray
 
     svg.append("g")
         .attr("transform", "translate(" + 20 + ", "+ 200 + ") rotate(-90)")
         .append("text")
-        .text("Кол-во частей")
+        .text(strX)
         .attr("class", "y-legend")
         .style("fill", "gray"); // set color to gray
 
