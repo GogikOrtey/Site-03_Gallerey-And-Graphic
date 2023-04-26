@@ -261,13 +261,16 @@ function radioButtonCheck() {
         inpMassRad.push(radioButtons[i].checked);
     }
 
-    // ******* Вот тут можно улучшить код ********
     if(inpMassRad[0] == true) input_a = 0; else input_a = 1;
     if(inpMassRad[2] == true) input_b = 0; 
-    else if(inpMassRad[2] == true) input_b = 1;
+    else if(inpMassRad[3] == true) input_b = 1;
     else input_b = 2;
 
     // Если ничего не выбрано, вернёт последние значения
+}
+
+function setVisibleElementGraf(isVisible) {
+    grafDiv[0].style.display = isVisible ? "block" : "none";
 }
 
 // ----------- 
@@ -275,8 +278,8 @@ function radioButtonCheck() {
 
 let grafDiv = document.getElementsByClassName('block-graf');
 
-let isVisible = true; // Скрываю или показываю элемент с диаграммой
-grafDiv[0].style.display = isVisible ? "block" : "none";
+let isVisible = false; // Скрываю или показываю элемент с диаграммой
+setVisibleElementGraf(isVisible);
 
 let input_a = 0; // Жанр / Год выхода
 let input_b = 0; // Макс. кол-во частей / Макс. рейтинг / Мин рейтинг
@@ -284,12 +287,13 @@ let input_b = 0; // Макс. кол-во частей / Макс. рейтин�
 // -------
 
 let buttDraw = document.getElementById('butt-graf');
-let graf_container = document.getElementsByClassName('graf-container');
+let graf_container = document.getElementById('graf-container');
 
 // Вот тут какие-то проблемы, но я не могу понять какие
 // А так всё работает
 buttDraw.addEventListener('click', () => {
     console.log('Кнопка нажата!');
+    setVisibleElementGraf(true);
 
     // Удаляю график
     let mainGraf = document.getElementsByClassName('curr-graff');
@@ -299,7 +303,8 @@ buttDraw.addEventListener('click', () => {
     let mainGraf2 = document.createElement("div");
     mainGraf2.className = "curr-graff";
 
-    // И вставляю его в нужное место
+    // И вставляю его в нужное место    
+    //console.log('graf_container.nodeName = ' + graf_container.nodeName);
     graf_container.insertBefore(mainGraf2, graf_container.firstChild);
 
     radioButtonCheck(); // Собираю информацию о выбранных опциях

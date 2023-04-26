@@ -42,7 +42,7 @@ block content
                 input#inp2-1(type='radio', name='ox', value='жанр')
                 p Жанр
               div
-                input#inp2-2(type='radio', name='ox', value='жанр')
+                input#inp2-2(type='radio', name='ox', value='жанр', checked)
                 p Год выхода                
             .right-edge-1
               p.title-1 Результат: 
@@ -55,7 +55,7 @@ block content
                 p Максимальный рейтинг             
                 span#gr.tooltip 
               div
-                input#in-3(type='radio', name='result', value='мин')
+                input#in-3(type='radio', name='result', value='мин', checked)
                 p Минимальный рейтинг        
                 span#bl.tooltip     
             button#butt-graf Построить 
@@ -112,7 +112,7 @@ block content
             button#butt-sort Построить 
       div.block-graf
         p График:
-        div.graf-container
+        div#graf-container
           div.curr-graff
       
     p.text-001 Таблица
