@@ -54,18 +54,41 @@ body {
 }
 img {
   align: middle;
-  width: 200px;
+  width: 300px;
   height: 200px;
   margin: 10px;
   border-radius: 7px;
+  -o-object-fit: cover;
+  object-fit: cover;
+  image-rendering: optimizeQuality;
   box-shadow: 0px 5px 10px 0px rgba(0,0,0,0.5);
 }
-.img-1 img {
-  border-radius: 10px;
+#gallery {
+  width: 90%;
+  margin: auto;
+  text-align: center;
 }
-a > img {
-  border: 2px solid #00f;
-}
+/*
+img
+	align middle 
+	width 200px
+	height 200px
+	margin 10px
+	border-radius: 7px
+	box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5)
+
+.img-1 img
+	border-radius: 10px
+	&:hover
+		//filter: blur(0px) contrast(115%)		
+	&:active
+		//filter: hue-rotate(180deg);
+
+a > img // Для выделения активного элемента
+	border: 2px solid col-3
+	&:hover
+		//border: 2px dashed col-3
+*/
 .block-block-2 {
   width: 100%;
   margin: auto;
